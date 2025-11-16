@@ -52,15 +52,8 @@ function connectGmail() {
     return;
   }
 
-  // Create JSON for state
-  const rawState = JSON.stringify({
-    credentialId: "UEwqJ7Vv1srVQRXL",  // <-- change this for each client
-    fullname: fullname,
-    company: company
-  });
-
-  // Base64 encode for n8n compatibility
-  const state = btoa(rawState);
+  // n8n only accepts the credentialId as state
+  const state = "UEwqJ7Vv1srVQRXL"; // <-- change for each client
 
   const params = new URLSearchParams({
     client_id: "139836157120-v0cb002ub2gvq0q50mca0568h9q8abtj.apps.googleusercontent.com",
@@ -74,11 +67,9 @@ function connectGmail() {
 
   const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
 
-  // Redirect user to Google login page
   window.location.href = authUrl;
 }
 </script>
 
 </body>
 </html>
-
