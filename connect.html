@@ -52,6 +52,33 @@ function connectGmail() {
     return;
   }
 
+  // n8n EXPECTS: {"cid": "<credentialId>"}
+  const rawState = JSON.stringify({ 
+    cid: "UEwqJ7Vv1srVQRXL"  // <-- change per client
+  });
+
+  // MUST be base64 encoded
+  const state = btoa(rawState);
+
+  const params = new URLSearchParams({
+    client_id: "139836157120-v0cb002ub2gvq0q50mca0568h9q8abtj.apps.googleusercontent.com",
+    redirect_uri: "https://n8nscalera.eu/rest/oauth2-credential/callback",
+    response_type: "code",
+    access_type: "offline",
+    prompt: "consent",
+    scope: scope,
+    state: state
+  });
+
+  const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+
+  window.location.href = authUrl;
+}
+</script>
+
+</body>
+</html>
+
   // n8n only accepts the credentialId as state
   const state = "UEwqJ7Vv1srVQRXL"; // <-- change for each client
 
@@ -73,3 +100,4 @@ function connectGmail() {
 
 </body>
 </html>
+
