@@ -1,10 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Connect Your Gmail</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; }
+  label { display: block; margin-top: 15px; font-weight: bold; }
+  select, button { width: 100%; padding: 10px; margin-top: 10px; }
+  button {
+    background: #4285F4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Connect Your Gmail</h1>
+<p>Select the access level you want to grant to this app.</p>
+
+<label>Choose Access Level</label>
+<select id="scope">
+  <option value="https://www.googleapis.com/auth/gmail.readonly">
+    Basic reading (read-only)
+  </option>
+  <option value="https://www.googleapis.com/auth/gmail.modify https://www.googleapis.com/auth/gmail.send">
+    Full read + send emails
+  </option>
+  <option value="https://mail.google.com/">
+    Full access to Gmail
+  </option>
+</select>
+
+<button onclick="connectGmail()">Connect with Google</button>
+
 <script>
 function connectGmail() {
   const scope = document.getElementById('scope').value;
 
-  // IMPORTANT: Use only the n8n credential ID
-  const rawState = JSON.stringify({ cid: "UEwqJ7Vv1srVQRXL" });
-  const state = btoa(rawState);
+  // ⚠️ Replace this with the credential ID from your n8n instance
+  const CREDENTIAL_ID = "UEwqJ7Vv1srVQRXL";
+
+  // n8n expects base64 JSON: {"cid":"<credentialId>"}
+  const state = btoa(JSON.stringify({ cid: CREDENTIAL_ID }));
 
   const params = new URLSearchParams({
     client_id: "139836157120-v0cb002ub2gvq0q50mca0568h9q8abtj.apps.googleusercontent.com",
@@ -20,3 +63,7 @@ function connectGmail() {
   window.location.href = authUrl;
 }
 </script>
+
+</body>
+</html>
+
