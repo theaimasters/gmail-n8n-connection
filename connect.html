@@ -13,10 +13,9 @@ function connectGmail() {
     cid: "UEwqJ7Vv1srVQRXL"
   });
   
-  // Base64 encode
-  const state = btoa(rawState);
+  // Base64 encode and REMOVE padding (the = signs)
+  const state = btoa(rawState).replace(/=/g, '');
   
-  // CRITICAL: Build URL manually to avoid double-encoding
   const authUrl = "https://accounts.google.com/o/oauth2/v2/auth" +
     "?client_id=139836157120-v0cb002ub2gvq0q50mca0568h9q8abtj.apps.googleusercontent.com" +
     "&redirect_uri=" + encodeURIComponent("https://n8nscalera.eu/rest/oauth2-credential/callback") +
@@ -24,7 +23,8 @@ function connectGmail() {
     "&access_type=offline" +
     "&prompt=consent" +
     "&scope=" + encodeURIComponent(scope) +
-    "&state=" + state;  // Don't encode state - let Google handle it
+    "&state=" + state;
   
+  console.log("State (no padding):", state);
   window.location.href = authUrl;
 }
